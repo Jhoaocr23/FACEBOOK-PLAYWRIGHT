@@ -10,11 +10,11 @@ const timeouts = {
         step: Duration.ofSeconds(30),                       
     },
     playwright: {
-        defaultNavigationTimeout: Duration.ofSeconds(15),   
-        defaultTimeout:           Duration.ofSeconds(10),    
+        defaultNavigationTimeout: Duration.ofSeconds(30),   
+        defaultTimeout:           Duration.ofSeconds(30),    
     },
     serenity: {
-        cueTimeout:               Duration.ofSeconds(10),    
+        cueTimeout:               Duration.ofSeconds(30),    
     }
 }
 
@@ -27,7 +27,7 @@ BeforeAll(async () => {
     
     browser = await playwright.chromium.launch({
         headless: false,
-        slowMo: 50
+        slowMo: 100
     });
 
     // Configure Serenity/JS
@@ -44,8 +44,8 @@ BeforeAll(async () => {
         crew: [
             [ '@serenity-js/console-reporter', { theme: 'auto' } ],
             [ '@serenity-js/web:Photographer', {
-                // strategy: 'TakePhotosOfInteractions',    // capture screenshots of all the interactions; slower but more comprehensive
-                strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
+                strategy: 'TakePhotosOfInteractions',    // capture screenshots of all the interactions; slower but more comprehensive
+                // strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
             } ],
             [ '@serenity-js/core:ArtifactArchiver', { outputDirectory: path.resolve(__dirname, '../../target/site/serenity') } ],
             [ '@serenity-js/serenity-bdd', { specDirectory: path.resolve(__dirname, '../../features') } ],

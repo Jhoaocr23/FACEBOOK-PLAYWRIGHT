@@ -7,14 +7,14 @@ import { Actors } from '../../test';
 
 const timeouts = {
     cucumber: {
-        step: Duration.ofSeconds(30),                       // how long to wait for a Cucumber step to complete
+        step: Duration.ofSeconds(30),                       
     },
     playwright: {
-        defaultNavigationTimeout: Duration.ofSeconds(15),   // how long to wait for a page to load
-        defaultTimeout:           Duration.ofSeconds(10),    // how long to wait for an element to show up
+        defaultNavigationTimeout: Duration.ofSeconds(15),   
+        defaultTimeout:           Duration.ofSeconds(10),    
     },
     serenity: {
-        cueTimeout:               Duration.ofSeconds(10),    // how long to wait for Serenity/JS to complete any post-test activities, like saving screenshots and reports
+        cueTimeout:               Duration.ofSeconds(10),    
     }
 }
 
@@ -24,8 +24,7 @@ let browser: playwright.Browser;
 setDefaultTimeout(timeouts.cucumber.step.inMilliseconds());
 
 BeforeAll(async () => {
-    // Launch the browser once before all the tests
-    // Serenity/JS will take care of managing Playwright browser context and browser tabs.
+    
     browser = await playwright.chromium.launch({
         headless: false,
         slowMo: 50
@@ -46,7 +45,7 @@ BeforeAll(async () => {
             [ '@serenity-js/console-reporter', { theme: 'auto' } ],
             [ '@serenity-js/web:Photographer', {
                 // strategy: 'TakePhotosOfInteractions',    // capture screenshots of all the interactions; slower but more comprehensive
-                // strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
+                strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
             } ],
             [ '@serenity-js/core:ArtifactArchiver', { outputDirectory: path.resolve(__dirname, '../../target/site/serenity') } ],
             [ '@serenity-js/serenity-bdd', { specDirectory: path.resolve(__dirname, '../../features') } ],
